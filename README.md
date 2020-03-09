@@ -9,3 +9,12 @@ Go2Fe 后端语言使用 Go，对应的开发框架使用截至目前使用相�
 Go2fe is a scaffold that can quickly generate corresponding interface when using Go make interface. In most of the development work, when the back-end engineers develop the technical requirements, they are often unable to move because there is no front-end resource matching. Go2fe was born to solve this problem.
 
 Go2fe backend language uses Go, and the corresponding development framework uses Gin, which is relatively widely used up to now. The generated front-end code is the code generated based on react's antd. In addition to being easy to maintain, Gin and react have a good user base.
+
+
+
+# myapp 
+Go生成的前端项目所存放的位置。
+# src
+Go的工作目录
+# doc
+文档目录
