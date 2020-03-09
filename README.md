@@ -12,8 +12,8 @@ Go2fe backend language uses Go, and the corresponding development framework uses
 
 
 
-# myapp 
-Go生成的前端项目所存放的位置。
+# myapp
+Go生成的前端项目所存放的位置
 # src
 Go的工作目录
 # doc
