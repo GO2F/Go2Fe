@@ -129,10 +129,8 @@ func init() {
 		// 3.	每个字段的值(直接使用字段名, 反正不需要填写)
 		// 4.	是否为需要特殊展示的字段(例如日期型timestamp / 勾选型 checkbox / etc)
 		// 5.	第一期, 不支持复合类型字段.
-		// 此处不能传入具体值, 而应该是数据类型, 或者基于数据类型随意生成的具体值
-		DataModel: CompontentModel{
-			ID: "123",
-		},
+		// 此处不需要填写具体值
+		DataModel: CompontentModel{},
 		// 接口响应值不需要声明, 走默认模式
 
 		// 一个数据模型可以对应多个page页面, true则自动生成, false则忽略
