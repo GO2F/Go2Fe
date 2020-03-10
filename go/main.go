@@ -1,8 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"reflect"
+	// "fmt"
+	// "reflect"
+	"go2fe/generate"
 )
 
 // RequestParams test
@@ -16,26 +17,29 @@ type RequestParams struct {
 }
 
 func main() {
-	a := RequestParams{
-		DisplayName: "123123",
-		PackageName: "123",
-	}
 
-	// 此处必须使用引用
-	test := reflect.TypeOf(&a)
-	test1 := test.Elem()
-	test2, _ := test1.FieldByName("DevListJSON")
-	test3 := test2.Tag
-	goType := test2.Type              // 可以拿到数据类型string
-	test4 := test3.Get("json")        // 可以拿到json标记对应的值: display_name
-	notExist := test3.Get("notExist") // 可以拿到json标记对应的值: display_name
-	fmt.Println("tag => ", test)
-	fmt.Println("tag => ", test1)
-	fmt.Println("tag => ", test2)
-	fmt.Println("tag => ", test3)
-	fmt.Println("goType => ", goType)
-	fmt.Println("tag => ", test4)
-	fmt.Println("notExist tag => ", notExist)
+	generate.Test()
+
+	// a := RequestParams{
+	// 	DisplayName: "123123",
+	// 	PackageName: "123",
+	// }
+
+	// // 此处必须使用引用
+	// test := reflect.TypeOf(&a)
+	// test1 := test.Elem()
+	// test2, _ := test1.FieldByName("DevListJSON")
+	// test3 := test2.Tag
+	// goType := test2.Type              // 可以拿到数据类型string
+	// test4 := test3.Get("json")        // 可以拿到json标记对应的值: display_name
+	// notExist := test3.Get("notExist") // 可以拿到json标记对应的值: display_name
+	// fmt.Println("tag => ", test)
+	// fmt.Println("tag => ", test1)
+	// fmt.Println("tag => ", test2)
+	// fmt.Println("tag => ", test3)
+	// fmt.Println("goType => ", goType)
+	// fmt.Println("tag => ", test4)
+	// fmt.Println("notExist tag => ", notExist)
 	return
 	// 	test1 := test.Elem()
 	// 	test2, _ := test1.FieldByName("DisplayName")
