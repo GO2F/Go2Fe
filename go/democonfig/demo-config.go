@@ -71,15 +71,17 @@ package democonfig
 // 	// 接口响应值不需要声明, 走默认模式
 // }
 
+// Page 页面配置
 type Page struct {
 	create bool
 	update bool
 	detail bool
 }
 
+// CompontentModel demo数据模型
 type CompontentModel struct {
-	ID          string `json:"id";unique_key`
-	DisplayName string `json:"display_name"`
+	ID          string `json:"id" unique_key:""`
+	DisplayName string `json:"display_name" show:""`
 	PackageName string `json:"package_name"`
 	DevListJSON string `json:"dev_list_json"`
 	Description string `json:"description"`
@@ -87,11 +89,7 @@ type CompontentModel struct {
 	Remark      string `json:"remark"`
 }
 
-// 综合写法
-
-type anyType interface {
-}
-
+// DefineModel 数据模型定义
 type DefineModel struct {
 	// 首先定义数据模型
 	// 需要处理的数据模型为
@@ -140,12 +138,12 @@ func init() {
 			// list: true,
 			create: true,
 			update: true,
-			detail: true,
+			detail: false,
 		},
 		// 页面基础地址(前端自动归并, 并补全出list/create/update路径)
 		BasePath: "/compontent",
 		// 接口基础地址
-		BaseApiPath: "/api/compontent/create",
+		BaseApiPath: "/api/compontent/",
 	}
 
 	PageList = []DefineModel{page}
