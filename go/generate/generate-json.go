@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	config "go2fe/democonfig"
+	"io/ioutil"
 
 	// 通过反射拿到数据模型结构
 	"reflect"
 )
+
+const version = 0.1
 
 // type TypeParseResult struct {
 // 	Project     string          `json:"project"`
@@ -29,6 +32,7 @@ type dataModel struct {
 }
 
 type typeJSONConfig struct {
+	Version   float32   `json:"version" desc:"配置版本号,使用一位小数作为配置版本"`
 	DataModel dataModel `json:"data_model"`
 	// 一个数据模型可以对应多个page页面, true则自动生成, false则忽略
 	// list页中, 根据page定义, 带有增加/删除/修改/详情按钮
@@ -46,6 +50,7 @@ func GetJSONConfig() (jsonConfigListJSONStr string) {
 	var jsonConfigList []typeJSONConfig
 	for _, page := range pageList {
 		var jsonConfig typeJSONConfig
+		jsonConfig.Version = version
 		jsonConfig.BaseAPIPath = page.BaseAPIPath
 		jsonConfig.BasePath = page.BasePath
 		jsonConfig.Page = page.Page
@@ -87,4 +92,10 @@ func GetJSONConfig() (jsonConfigListJSONStr string) {
 	fmt.Println("----------------")
 	fmt.Println("json str =>", jsonConfigListJSONStr)
 	return jsonConfigListJSONStr
+}
+
+// WriteConfig 写入配置
+func WriteConfig() {
+	configStr := GetJSONConfig()
+	ioutil.WriteFile("config.json", []byte(configStr), 0777)
 }
