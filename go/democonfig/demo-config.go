@@ -73,9 +73,9 @@ package democonfig
 
 // Page 页面配置
 type Page struct {
-	create bool
-	update bool
-	detail bool
+	Create bool `json:"create"`
+	Update bool `json:"update"`
+	Detail bool `json:"detail"`
 }
 
 // CompontentModel demo数据模型
@@ -110,10 +110,12 @@ type DefineModel struct {
 	// 页面基础地址(前端自动归并, 并补全出list/create/update路径)
 	BasePath string
 	// 接口基础地址
-	BaseApiPath string
+	BaseAPIPath string
 }
 
 var page DefineModel
+
+// PageList 用于存放所有页面记录
 var PageList []DefineModel
 
 func init() {
@@ -128,7 +130,9 @@ func init() {
 		// 4.	是否为需要特殊展示的字段(例如日期型timestamp / 勾选型 checkbox / etc)
 		// 5.	第一期, 不支持复合类型字段.
 		// 此处不需要填写具体值
-		DataModel: CompontentModel{},
+		DataModel: CompontentModel{
+			ID: "123",
+		},
 		// 接口响应值不需要声明, 走默认模式
 
 		// 一个数据模型可以对应多个page页面, true则自动生成, false则忽略
@@ -136,14 +140,14 @@ func init() {
 		// list一定为true
 		Page: Page{
 			// list: true,
-			create: true,
-			update: true,
-			detail: false,
+			Create: true,
+			Update: true,
+			Detail: false,
 		},
 		// 页面基础地址(前端自动归并, 并补全出list/create/update路径)
 		BasePath: "/compontent",
 		// 接口基础地址
-		BaseApiPath: "/api/compontent/",
+		BaseAPIPath: "/api/compontent/",
 	}
 
 	PageList = []DefineModel{page}
