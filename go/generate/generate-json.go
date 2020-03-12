@@ -46,9 +46,9 @@ type typeJSONConfig struct {
 
 // GetJSONConfig 输出项目json配置
 func GetJSONConfig() (jsonConfigListJSONStr string) {
-	pageList := config.PageList
+	modelList := config.GetModelList()
 	var jsonConfigList []typeJSONConfig
-	for _, page := range pageList {
+	for _, page := range modelList {
 		var jsonConfig typeJSONConfig
 		jsonConfig.Version = version
 		jsonConfig.BaseAPIPath = page.BaseAPIPath
@@ -88,7 +88,7 @@ func GetJSONConfig() (jsonConfigListJSONStr string) {
 	jsonConfigListJSONBuf, _ := json.Marshal(jsonConfigList)
 	jsonConfigListJSONStr = string(jsonConfigListJSONBuf)
 
-	fmt.Println("pageList =>", pageList)
+	fmt.Println("pageList =>", modelList)
 	fmt.Println("----------------")
 	fmt.Println("json str =>", jsonConfigListJSONStr)
 	return jsonConfigListJSONStr

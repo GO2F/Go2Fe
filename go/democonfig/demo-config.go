@@ -113,14 +113,23 @@ type DefineModel struct {
 	BaseAPIPath string
 }
 
-var page DefineModel
-
 // PageList 用于存放所有页面记录
-var PageList []DefineModel
+var pageList []DefineModel
+
+// RegisterModel 由业务方使用, 注册数据模型
+func RegisterModel(model DefineModel) {
+	pageList = append(pageList, model)
+	return
+}
+
+// GetModelList 由go2fe使用, 用于获取所有数据模型列表, 生成配置
+func GetModelList() []DefineModel {
+	return pageList
+}
 
 func init() {
 
-	page = DefineModel{
+	page := DefineModel{
 		// 首先定义数据模型
 		// 需要处理的数据模型为
 		// 模型中有字段标记, 可以取得以下信息
@@ -150,5 +159,5 @@ func init() {
 		BaseAPIPath: "/api/compontent/",
 	}
 
-	PageList = []DefineModel{page}
+	RegisterModel(page)
 }
