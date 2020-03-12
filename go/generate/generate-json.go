@@ -62,6 +62,7 @@ func GetJSONConfig() (jsonConfigListJSONStr string) {
 			field := dataModelType.Field(fieldIndex)
 			keyModel.Key = field.Tag.Get("json")
 			if keyModel.Key == "" {
+				// 如果没定义key值, 不应该输出, 而是直接跳过
 				continue
 			}
 

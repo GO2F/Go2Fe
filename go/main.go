@@ -18,7 +18,7 @@ type RequestParams struct {
 
 func main() {
 
-	generate.Test()
+	generate.GetJSONConfig()
 
 	// a := RequestParams{
 	// 	DisplayName: "123123",
