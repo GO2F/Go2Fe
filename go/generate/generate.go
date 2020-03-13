@@ -3,7 +3,7 @@ package generate
 import (
 	"encoding/json"
 	"fmt"
-	config "go2fe/democonfig"
+	config "go2fe/register"
 	"io/ioutil"
 
 	// 通过反射拿到数据模型结构
