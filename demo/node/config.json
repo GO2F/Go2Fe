@@ -1,0 +1,54 @@
+[
+  {
+    "version": 0.1,
+    "data_model": {
+      "key_list": [
+        {
+          "key": "id",
+          "var_type": "string",
+          "is_show_in_list": false,
+          "is_unique_key": true
+        },
+        {
+          "key": "display_name",
+          "var_type": "string",
+          "is_show_in_list": true,
+          "is_unique_key": false
+        },
+        {
+          "key": "package_name",
+          "var_type": "string",
+          "is_show_in_list": false,
+          "is_unique_key": false
+        },
+        {
+          "key": "dev_list_json",
+          "var_type": "string",
+          "is_show_in_list": false,
+          "is_unique_key": false
+        },
+        {
+          "key": "description",
+          "var_type": "string",
+          "is_show_in_list": false,
+          "is_unique_key": false
+        },
+        {
+          "key": "site_url",
+          "var_type": "string",
+          "is_show_in_list": false,
+          "is_unique_key": false
+        },
+        {
+          "key": "remark",
+          "var_type": "string",
+          "is_show_in_list": false,
+          "is_unique_key": false
+        }
+      ]
+    },
+    "page_config": { "create": true, "update": false, "detail": true },
+    "base_url_path": "/compontent",
+    "base_api_path": "/api/compontent"
+  }
+]
