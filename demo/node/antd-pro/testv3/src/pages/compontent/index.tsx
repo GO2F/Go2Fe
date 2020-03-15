@@ -3,7 +3,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import { Card, Typography, Alert } from 'antd';
 
-import styles from './Welcome.less';
+import styles from './index.less';
 
 const CodePreview: React.FC<{}> = ({ children }) => (
   <pre className={styles.pre}>
