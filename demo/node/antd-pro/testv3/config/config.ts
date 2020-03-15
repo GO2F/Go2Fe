@@ -102,13 +102,7 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
-            },
-            {
-              path: '/welcome',
-              name: 'welcome',
-              icon: 'smile',
-              component: './Welcome',
+              redirect: '/compontent',
             },
             {
               path: '/compontent',
@@ -123,11 +117,11 @@ export default {
                   component: './Compontent/Create',
                 },
                 {
-                  path: '/compontent/update',
+                  path: '/compontent/update/:id',
                   component: './Compontent/Create',
                 },
                 {
-                  path: '/compontent/detail',
+                  path: '/compontent/detail/:id',
                   component: './Compontent/Create',
                 },
               ],

@@ -1,79 +1,76 @@
-import React from "react";
-import styles from "./index.less";
-import { Table, Divider, Tag } from "antd";
+import React from 'react';
+import styles from './index.less';
+import { Table, Divider, Tag } from 'antd';
+import Link from 'umi/link';
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    render: text => <a>{text}</a>
+    title: 'id',
+    dataIndex: 'id',
+    key: 'id',
+    // render: text => <a>{text}</a>
   },
   {
-    title: "Age",
-    dataIndex: "age",
-    key: "age"
+    title: '组件库名称',
+    dataIndex: 'display_name',
+    key: 'display_name',
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address"
+    title: '包名',
+    dataIndex: 'package_name',
+    key: 'package_name',
   },
+  // {
+  //   title: 'Tags',
+  //   key: 'tags',
+  //   dataIndex: 'tags',
+  //   render: tags => (
+  //     <span>
+  //       {tags.map(tag => {
+  //         let color = tag.length > 5 ? 'geekblue' : 'green';
+  //         if (tag === 'loser') {
+  //           color = 'volcano';
+  //         }
+  //         return (
+  //           <Tag color={color} key={tag}>
+  //             {tag.toUpperCase()}
+  //           </Tag>
+  //         );
+  //       })}
+  //     </span>
+  //   ),
+  // },
   {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    render: tags => (
+    title: '操作',
+    key: 'action',
+    render: (text: string, record: any) => (
       <span>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-          if (tag === "loser") {
-            color = "volcano";
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </span>
-    )
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (text, record) => (
-      <span>
-        <a>Invite {record.name}</a>
+        <Link to={`/compontent/detail/${record.id}`}>详情</Link>
+        <span>&nbsp;</span>
+        <a href={`/compontent/update/${record.id}`}>修改</a>
         <Divider type="vertical" />
-        <a>Delete</a>
+        <a href={`/compontent/delete/${record.id}`}>删除</a>
       </span>
-    )
-  }
+    ),
+  },
 ];
 
 const data = [
   {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"]
+    id: 1,
+    display_name: 'antd',
+    package_name: '@antd',
   },
   {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"]
+    id: 2,
+    display_name: 'cutter-ui',
+    package_name: '@ke/cutter-ui',
   },
   {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"]
-  }
+    id: 3,
+    display_name: '饿了么ui',
+    package_name: '@element-ui',
+  },
 ];
 
 export default () => (
