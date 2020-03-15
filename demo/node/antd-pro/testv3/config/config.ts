@@ -116,7 +116,21 @@ export default {
               icon: 'smile',
               // 如果首字母大写, 表示入口为ts文件
               // 小写表示入口为jsx文件
-              component: './Compontent',
+              component: './Compontent/list',
+              routes: [
+                {
+                  path: '/compontent/create',
+                  component: './Compontent/Create',
+                },
+                {
+                  path: '/compontent/update',
+                  component: './Compontent/Create',
+                },
+                {
+                  path: '/compontent/detail',
+                  component: './Compontent/Create',
+                },
+              ],
             },
             {
               path: '/admin',
