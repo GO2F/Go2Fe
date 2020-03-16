@@ -47,9 +47,9 @@ const columns = [
       <span>
         <Link to={`/compontent/detail/${record.id}`}>详情</Link>
         <span>&nbsp;</span>
-        <a href={`/compontent/update/${record.id}`}>修改</a>
+        <Link to={`/compontent/update/${record.id}`}>修改</Link>
         <Divider type="vertical" />
-        <a href={`/compontent/delete/${record.id}`}>删除</a>
+        <Link to={`/delete/${record.id}`}>删除</Link>
       </span>
     ),
   },

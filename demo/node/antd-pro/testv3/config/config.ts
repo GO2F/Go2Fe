@@ -102,27 +102,31 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/compontent',
+              redirect: '/compontent/list',
             },
             {
               path: '/compontent',
               name: 'compontent',
               icon: 'smile',
-              // 如果首字母大写, 表示入口为ts文件
-              // 小写表示入口为jsx文件
               component: './Compontent/list',
               routes: [
                 {
-                  path: '/compontent/create',
-                  component: './Compontent/Create',
+                  path: 'create',
+                  name: 'create',
+                  icon: 'smile',
+                  component: './compontent/create/index.tsx',
                 },
                 {
-                  path: '/compontent/update/:id',
-                  component: './Compontent/Create',
+                  path: 'update/:id',
+                  name: 'update',
+                  icon: 'smile',
+                  component: './compontent/create/index.tsx',
                 },
                 {
                   path: '/compontent/detail/:id',
-                  component: './Compontent/Create',
+                  name: 'detail',
+                  icon: 'smile',
+                  component: './compontent/create/index.tsx',
                 },
               ],
             },
