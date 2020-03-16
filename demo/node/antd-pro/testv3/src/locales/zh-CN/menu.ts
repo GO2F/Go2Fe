@@ -6,6 +6,7 @@ export default {
   'menu.admin.sub-page': '二级管理页',
   'menu.login': '登录',
   'menu.register': '注册',
+  'menu.compontent': 'compontent',
   'menu.register.result': '注册结果',
   'menu.dashboard': 'Dashboard',
   'menu.dashboard.analysis': '分析页',

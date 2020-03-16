@@ -81,78 +81,43 @@ export default {
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
-      path: '/user',
-      component: '../layouts/UserLayout',
-      routes: [
-        {
-          name: 'login',
-          path: '/user/login',
-          component: './user/login',
-        },
-      ],
-    },
-    {
       path: '/',
-      component: '../layouts/SecurityLayout',
+      // component: '../layouts/SecurityLayout',
+      component: '../layouts/BasicLayout',
       routes: [
         {
           path: '/',
-          component: '../layouts/BasicLayout',
-          authority: ['admin', 'user'],
-          routes: [
-            {
-              path: '/',
-              redirect: '/compontent/list',
-            },
-            {
-              path: '/compontent',
-              name: 'compontent',
-              icon: 'smile',
-              component: './Compontent/list',
-              routes: [
-                {
-                  path: 'create',
-                  name: 'create',
-                  icon: 'smile',
-                  component: './compontent/create/index.tsx',
-                },
-                {
-                  path: 'update/:id',
-                  name: 'update',
-                  icon: 'smile',
-                  component: './compontent/create/index.tsx',
-                },
-                {
-                  path: '/compontent/detail/:id',
-                  name: 'detail',
-                  icon: 'smile',
-                  component: './compontent/create/index.tsx',
-                },
-              ],
-            },
-            {
-              path: '/admin',
-              name: 'admin',
-              icon: 'crown',
-              component: './Admin',
-              authority: ['admin'],
-              routes: [
-                {
-                  path: '/admin/sub-page',
-                  name: 'sub-page',
-                  icon: 'smile',
-                  component: './Welcome',
-                  authority: ['admin'],
-                },
-              ],
-            },
-            {
-              component: './404',
-            },
-          ],
+          redirect: '/compontent',
         },
         {
-          component: './404',
+          path: 'compontent',
+          name: 'compontent',
+          icon: 'smile',
+
+          // redirect: '/compontent/list',
+          // indexRoute: { redirect: '/compontent/list' },
+          component: './compontent/_layout.tsx',
+          routes: [
+            {
+              path: '/compontent/list',
+              component: './compontent/list/index.tsx',
+            },
+            {
+              path: '/compontent/create',
+              exact: true,
+              component: './compontent/create/index.tsx',
+            },
+            {
+              path: '/compontent/update/:id',
+              exact: true,
+              component: './compontent/create/index.tsx',
+            },
+            {
+              path: '/compontent/detail/:id',
+              exact: true,
+              component: './compontent/create/index.tsx',
+            },
+          ],
         },
       ],
     },
