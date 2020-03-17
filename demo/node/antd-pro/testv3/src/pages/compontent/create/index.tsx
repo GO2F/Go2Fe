@@ -11,17 +11,5 @@ export default (): React.ReactNode => (
     <Card>
       <Form></Form>
     </Card>
-    <p
-      style={{
-        textAlign: 'center',
-        marginTop: 24,
-      }}
-    >
-      create
-      <a href="https://pro.ant.design/docs/block-cn" target="_blank" rel="noopener noreferrer">
-        use block
-      </a>
-      。
-    </p>
   </PageHeaderWrapper>
 );

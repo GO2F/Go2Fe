@@ -8,7 +8,6 @@ import TableBase from './table_basic';
 export default (): React.ReactNode => (
   <PageHeaderWrapper>
     <Card>
-      <p>123123</p>
       <TableBase />
     </Card>
   </PageHeaderWrapper>
