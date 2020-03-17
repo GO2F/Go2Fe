@@ -93,9 +93,6 @@ export default {
           path: 'compontent',
           name: 'compontent',
           icon: 'smile',
-
-          // redirect: '/compontent/list',
-          // indexRoute: { redirect: '/compontent/list' },
           component: './compontent/_layout.tsx',
           routes: [
             {
