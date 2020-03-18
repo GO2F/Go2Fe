@@ -8,7 +8,6 @@ const columns = [
     title: 'id',
     dataIndex: 'id',
     key: 'id',
-    // render: text => <a>{text}</a>
   },
   {
     title: '组件库名称',
@@ -20,26 +19,6 @@ const columns = [
     dataIndex: 'package_name',
     key: 'package_name',
   },
-  // {
-  //   title: 'Tags',
-  //   key: 'tags',
-  //   dataIndex: 'tags',
-  //   render: tags => (
-  //     <span>
-  //       {tags.map(tag => {
-  //         let color = tag.length > 5 ? 'geekblue' : 'green';
-  //         if (tag === 'loser') {
-  //           color = 'volcano';
-  //         }
-  //         return (
-  //           <Tag color={color} key={tag}>
-  //             {tag.toUpperCase()}
-  //           </Tag>
-  //         );
-  //       })}
-  //     </span>
-  //   ),
-  // },
   {
     title: '操作',
     key: 'action',

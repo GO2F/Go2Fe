@@ -5,6 +5,139 @@ import themePluginConfig from './themePluginConfig';
 import proxy from './proxy';
 import webpackPlugin from './plugin.config';
 
+import TypePageConfigList from './type_test_config';
+import test_config from './test_config';
+let pageConfigList: TypePageConfigList = test_config as TypePageConfigList;
+type TypeRoute = {
+  path: string;
+  name?: string;
+  icon?: string;
+  component?: string;
+  // 记录扩展内容
+  extends?: any;
+  routes?: TypeRoute[];
+  exact: boolean;
+};
+let routeList: TypeRoute[] = [];
+const PublicLayoutTemplateUri = './component/_layout.tsx';
+const PublicListTemplateUri = './component/list/index.tsx';
+const PublicCreateTemplateUri = './component/create/index.tsx';
+const PublicDetailTemplateUri = './component/create/index.tsx';
+// {
+//   path: 'component',
+//   name: 'component',
+//   icon: 'smile',
+//   component: './component/_layout.tsx',
+//   // 可以通过props.route获取
+//   extends: {
+//     hello: 'world',
+//   },
+//   routes: [
+//     {
+//       path: '/component/list',
+//       component: './component/list/index.tsx',
+//     },
+//     {
+//       path: '/component/create',
+//       exact: true,
+//       component: './component/create/index.tsx',
+//     },
+//     {
+//       path: '/component/update/:id',
+//       exact: true,
+//       component: './component/create/index.tsx',
+//     },
+//     {
+//       path: '/component/detail/:id',
+//       exact: true,
+//       component: './component/create/index.tsx',
+//     },
+//   ],
+// },
+
+for (let pageConfig of pageConfigList) {
+  let dataModel = pageConfig.data_model;
+
+  let currentPageRoute: TypeRoute = {
+    path: pageConfig.base_url_path,
+    component: PublicLayoutTemplateUri,
+    name: pageConfig.name,
+    routes: [],
+    exact: false,
+    //   icon: 'smile',
+    //   component: './component/_layout.tsx',
+  };
+  let listRouter: TypeRoute = {
+    path: pageConfig.base_url_path + '/list',
+    component: PublicListTemplateUri,
+    extends: {},
+    exact: true,
+  };
+  let createRouter: TypeRoute = {
+    path: pageConfig.base_url_path + '/create',
+    component: PublicCreateTemplateUri,
+    exact: true,
+    extends: {},
+  };
+  let updateRouter: TypeRoute = {
+    path: pageConfig.base_url_path + '/update/:id',
+    component: PublicCreateTemplateUri,
+    extends: {},
+    exact: true,
+  };
+  let detailRouter: TypeRoute = {
+    path: pageConfig.base_url_path + '/detail/:id',
+    component: PublicDetailTemplateUri,
+    extends: {},
+    exact: true,
+  };
+
+  let keyConfigList = dataModel.key_list;
+  let tableColumnList = [];
+  for (let keyConfig of keyConfigList) {
+    let columnItem = {
+      title: keyConfig.title,
+      dataIndex: keyConfig.key,
+      key: keyConfig.key,
+    };
+    tableColumnList.push(columnItem);
+  }
+  // 添加操作栏
+  tableColumnList.push({
+    title: '操作',
+    key: 'action',
+    render: (text: string, record: any) => {
+      return '123123';
+    },
+    // (
+    // <span>
+    //   <Link to={`/component/detail/${record.id}`}>详情</Link>
+    //   <span>&nbsp;</span>
+    //   <Link to={`/component/update/${record.id}`}>修改</Link>
+    //   <Divider type="vertical" />
+    //   <Link to={`/delete/${record.id}`}>删除</Link>
+    // </span>
+    // ),
+  });
+  listRouter.extends['tableColumnList'] = tableColumnList;
+  listRouter.extends['baseApiPath'] = pageConfig.base_api_path;
+
+  let dataModelPageConfig = pageConfig.page_config;
+  console.log('dataModelPageConfig => ', dataModelPageConfig);
+  console.log('dataModel => ', Object.keys(dataModel));
+  currentPageRoute.routes?.push(listRouter);
+  if (dataModelPageConfig.create) {
+    currentPageRoute.routes?.push(createRouter);
+  }
+  if (dataModelPageConfig.update) {
+    currentPageRoute.routes?.push(updateRouter);
+  }
+  if (dataModelPageConfig.detail) {
+    currentPageRoute.routes?.push(detailRouter);
+  }
+  routeList.push(currentPageRoute);
+}
+
 const { pwa } = defaultSettings;
 
 // preview.pro.ant.design only do not use in your production ;
@@ -23,7 +156,8 @@ const plugins: IPlugin[] = [
       },
       locale: {
         // default false
-        enable: true,
+        // 不需要启用多语言功能
+        enable: false,
         // default zh-CN
         default: 'zh-CN',
         // default true, when it is true, will use `navigator.language` overwrite default
@@ -71,7 +205,7 @@ if (isAntDesignProPreview) {
   ]);
   plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
 }
-
+// console.log('routeList =>', JSON.stringify(routeList));
 export default {
   plugins,
   hash: true,
@@ -84,41 +218,8 @@ export default {
       path: '/',
       // component: '../layouts/SecurityLayout',
       component: '../layouts/BasicLayout',
-      routes: [
-        {
-          path: '/',
-          redirect: '/compontent',
-        },
-        {
-          path: 'compontent',
-          name: 'compontent',
-          icon: 'smile',
-          component: './compontent/_layout.tsx',
-          routes: [
-            {
-              path: '/compontent/list',
-              component: './compontent/list/index.tsx',
-            },
-            {
-              path: '/compontent/create',
-              exact: true,
-              component: './compontent/create/index.tsx',
-            },
-            {
-              path: '/compontent/update/:id',
-              exact: true,
-              component: './compontent/create/index.tsx',
-            },
-            {
-              path: '/compontent/detail/:id',
-              exact: true,
-              component: './compontent/create/index.tsx',
-            },
-          ],
-        },
-      ],
+      routes: routeList,
     },
-
     {
       component: './404',
     },
