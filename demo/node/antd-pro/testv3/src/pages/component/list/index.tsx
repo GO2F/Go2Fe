@@ -40,6 +40,13 @@ export default class TablePage extends React.Component<any, any> {
     let keyConfigList = extendConfig.keyList;
     let tableColumnList = [];
     for (let keyConfig of keyConfigList) {
+      // 目前支持直接展示int/string等文本类型
+
+      // 处理字段隐藏逻辑
+      if (keyConfig.is_show_in_list === false) {
+        continue;
+      }
+
       let columnItem = {
         title: keyConfig.title,
         dataIndex: keyConfig.key,
@@ -51,6 +58,7 @@ export default class TablePage extends React.Component<any, any> {
     tableColumnList.push({
       title: '操作',
       key: 'action',
+      fixed: 'right',
       render: (text: string, record: any) => {
         return (
           <div>
