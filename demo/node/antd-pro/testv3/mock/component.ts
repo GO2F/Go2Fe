@@ -22,4 +22,11 @@ export default {
       },
     ],
   },
+  'GET /api/component/get': {
+    data: {
+      id: 1,
+      display_name: 'antd',
+      package_name: '@antd',
+    },
+  },
 };

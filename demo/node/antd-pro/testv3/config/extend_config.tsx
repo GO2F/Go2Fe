@@ -8,6 +8,8 @@ export type TypeExtends = {
   keyList: TypeKey[];
   // 基础Api路径
   baseApiPath: string;
+  // 基础页面路径
+  baseUrlPath: string;
   // 配置启用的页面
   pageConfig: {
     create: boolean;
@@ -46,6 +48,7 @@ for (let pageConfig of pageConfigList) {
     keyList: dataModel.key_list,
     baseApiPath: pageConfig.base_api_path,
     pageConfig: pageConfig.page_config,
+    baseUrlPath:pageConfig.base_url_path
   };
   let listRouter: TypeRoute = {
     path: pageConfig.base_url_path + '/list',

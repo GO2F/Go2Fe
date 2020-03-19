@@ -68,13 +68,15 @@ class RegistrationForm extends React.Component<
     autoCompleteResult: [],
   };
 
-  handleSubmit = e => {
+  handleSubmit = async (e: any) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
       }
     });
+    let result = this.props.form.getFieldsValue();
+    await this.props.handleSubmit(result);
   };
 
   handleConfirmBlur = e => {
@@ -257,7 +259,7 @@ class RegistrationForm extends React.Component<
       if (keyConfig.is_unique_key) {
         let formItem = (
           <Form.Item label={keyConfig.title}>
-            <span>{this.props.form.getFieldValue(keyConfig.key)}</span>
+            <span>{this.props.initData[keyConfig.key]}</span>
           </Form.Item>
         );
         formItemList = [formItem, ...formItemList];
@@ -267,7 +269,9 @@ class RegistrationForm extends React.Component<
       if (keyConfig.var_type === 'string') {
         let formItem = (
           <Form.Item label={keyConfig.title || ' '}>
-            {getFieldDecorator('keyConfig.key', {})(<Input />)}
+            {getFieldDecorator(keyConfig.key, {
+              initialValue: this.props.initData[keyConfig.key],
+            })(<Input />)}
           </Form.Item>
         );
         formItemList.push(formItem);
@@ -291,7 +295,7 @@ class RegistrationForm extends React.Component<
         {formItemList}
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Register
+            提交
           </Button>
         </Form.Item>
       </Form>
@@ -304,7 +308,11 @@ const WrappedRegistrationForm = Form.create({ name: 'register' })(RegistrationFo
 export default (props: any) => (
   <div className={styles.container}>
     <div id="components-form-demo-register">
-      <WrappedRegistrationForm keyConfigList={props.keyConfigList} />
+      <WrappedRegistrationForm
+        initData={props.initData}
+        keyConfigList={props.keyConfigList}
+        handleSubmit={props.handleSubmit}
+      />
     </div>
   </div>
 );
