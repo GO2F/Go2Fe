@@ -17,7 +17,18 @@ export default class TablePage extends React.Component<any, any> {
   };
 
   componentDidMount() {
-    this.asyncFetchData();
+    if (this.getPageType() === 'update') {
+      this.asyncFetchData();
+    }
+  }
+
+  getPageType(): 'create' | 'update' {
+    // 判断当前页面是create页面还是update页面
+    let extendConfig: TypeExtends = this.props.route.extendConfig;
+    if (location.href.includes(`${extendConfig.baseUrlPath}/create`)) {
+      return 'create';
+    }
+    return 'update';
   }
 
   asyncFetchData = async () => {
@@ -44,9 +55,20 @@ export default class TablePage extends React.Component<any, any> {
   };
 
   handleSubmit = async (item: any) => {
-    console.log('submit item =>', item);
-    // 提交完毕, 回到列表页
     let extendConfig: TypeExtends = this.props.route.extendConfig;
+
+    let baseApi = extendConfig.baseApiPath;
+    if (this.getPageType() === 'create') {
+      // 对应create
+      let api = baseApi + '/create';
+      console.log('create: add item =>', api, item);
+    } else {
+      // 对应update
+      let api = baseApi + '/update';
+      console.log('update: submit item =>', api, item);
+    }
+
+    // 提交完毕, 回到列表页
     router.push(extendConfig.baseUrlPath + '/list');
   };
 
