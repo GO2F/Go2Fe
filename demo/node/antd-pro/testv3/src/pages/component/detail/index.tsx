@@ -54,58 +54,6 @@ export default class TablePage extends React.Component<any, any> {
     });
   };
 
-  handleSubmit = async (item: any) => {
-    let extendConfig: TypeExtends = this.props.route.extendConfig;
-
-    let baseApi = extendConfig.baseApiPath;
-    if (this.getPageType() === 'create') {
-      // 对应create
-      let api = baseApi + '/create';
-      console.log('create: add item =>', api, item);
-      let response = await request
-        .post(api, {
-          params: {
-            ...item,
-          },
-        })
-        .catch(() => {
-          return {};
-        });
-      if (response.code !== 0) {
-        message.error(`提交失败, 错误信息:${response?.msg}`);
-        console.log('接口返回值异常, 错误信息:', response?.msg);
-        return;
-      }
-      message.info('创建成功', 1, () => {
-        // 提交完毕, 回到列表页
-        router.push(extendConfig.baseUrlPath + '/list');
-      });
-    } else {
-      // 对应update
-      let api = baseApi + '/update';
-      console.log('update: submit item =>', api, item);
-      let response = await request
-        .post(api, {
-          params: {
-            // 更新信息中, 一定要带id
-            ...item,
-          },
-        })
-        .catch(() => {
-          return {};
-        });
-      if (response.code !== 0) {
-        message.error(`更新失败, 错误信息:${response?.msg}`);
-        console.log('接口返回值异常, 错误信息:', response?.msg);
-        return;
-      }
-      message.info('更新成功', 1, () => {
-        // 提交完毕, 回到列表页
-        router.push(extendConfig.baseUrlPath + '/list');
-      });
-    }
-  };
-
   render() {
     let extendConfig: TypeExtends = this.props.route.extendConfig;
     console.log('hello world =>', this.props);
@@ -118,7 +66,6 @@ export default class TablePage extends React.Component<any, any> {
           <Form
             keyConfigList={keyConfigList}
             initData={this.state.item}
-            handleSubmit={this.handleSubmit}
             homeUri={extendConfig.baseUrlPath + '/list'}
           ></Form>
         </Card>

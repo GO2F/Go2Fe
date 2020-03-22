@@ -32,7 +32,7 @@ let routeList: TypeRoute[] = [];
 const PublicLayoutTemplateUri = './component/_layout.tsx';
 const PublicListTemplateUri = './component/list/index.tsx';
 const PublicCreateTemplateUri = './component/create/index.tsx';
-const PublicDetailTemplateUri = './component/create/index.tsx';
+const PublicDetailTemplateUri = './component/detail/index.tsx';
 
 for (let pageConfig of pageConfigList) {
   let dataModel = pageConfig.data_model;
@@ -48,7 +48,7 @@ for (let pageConfig of pageConfigList) {
     keyList: dataModel.key_list,
     baseApiPath: pageConfig.base_api_path,
     pageConfig: pageConfig.page_config,
-    baseUrlPath:pageConfig.base_url_path
+    baseUrlPath: pageConfig.base_url_path,
   };
   let listRouter: TypeRoute = {
     path: pageConfig.base_url_path + '/list',

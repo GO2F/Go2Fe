@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.less';
-import { Form, Input, Button, Divider } from 'antd';
+import { Form, Button } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import { TypeExtends } from '../../type_extend';
 import router from 'umi/router';
@@ -12,8 +12,6 @@ interface CustomerFormProps extends FormComponentProps {
   };
   // 列表页地址
   homeUri: string;
-  // 回调函数
-  handleSubmit: Function;
   // 配置列表, 用于生成Form表单
   keyConfigList: TypeExtends['keyList'];
 }
@@ -30,20 +28,7 @@ class RegistrationForm extends React.Component<
     autoCompleteResult: [],
   };
 
-  handleSubmit = async (e: any) => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
-    let result = this.props.form.getFieldsValue();
-    await this.props.handleSubmit(result);
-  };
-
   render() {
-    const { getFieldDecorator } = this.props.form;
-
     const keyConfigList = this.props.keyConfigList;
 
     let formItemList: React.ReactElement[] = [];
@@ -61,10 +46,8 @@ class RegistrationForm extends React.Component<
 
       if (keyConfig.var_type === 'string') {
         let formItem = (
-          <Form.Item label={keyConfig.title || ' '}>
-            {getFieldDecorator(keyConfig.key, {
-              initialValue: this.props.initData[keyConfig.key],
-            })(<Input />)}
+          <Form.Item label={keyConfig.title}>
+            <span>{this.props.initData[keyConfig.key]}</span>
           </Form.Item>
         );
         formItemList.push(formItem);
@@ -84,20 +67,16 @@ class RegistrationForm extends React.Component<
     };
 
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+      <Form {...formItemLayout}>
         {formItemList}
         <Form.Item {...tailFormItemLayout}>
           <Button
-            type="default"
+            type="primary"
             onClick={() => {
               router.push(this.props.homeUri);
             }}
           >
             返回
-          </Button>
-          &nbsp; &nbsp; &nbsp;
-          <Button type="primary" htmlType="submit">
-            提交
           </Button>
         </Form.Item>
       </Form>
@@ -114,7 +93,6 @@ export default (props: any) => (
         homeUri={props.homeUri}
         initData={props.initData}
         keyConfigList={props.keyConfigList}
-        handleSubmit={props.handleSubmit}
       />
     </div>
   </div>

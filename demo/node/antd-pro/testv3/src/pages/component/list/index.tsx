@@ -14,7 +14,7 @@ export default class TablePage extends React.Component<any, any> {
     itemList: [],
   };
 
-  async fetchData() {
+  async asyncFetchData() {
     const extendConfig: TypeExtends = this.props.route.extendConfig;
     const baseApiPath = extendConfig?.baseApiPath;
     const api = `${baseApiPath}/list`;
@@ -27,9 +27,11 @@ export default class TablePage extends React.Component<any, any> {
     });
   }
 
+  async asyncRemoveItem(id: number) {}
+
   componentDidMount() {
     // 初始化数据
-    this.fetchData();
+    this.asyncFetchData();
     console.log('数据初始化完毕 this.state.itemList => ', this.state.itemList);
   }
 
