@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { Card } from 'antd';
+import { Card, message, Button, Modal } from 'antd';
 import Link from 'umi/link';
 import { Divider } from 'antd';
 
@@ -27,7 +27,25 @@ export default class TablePage extends React.Component<any, any> {
     });
   }
 
-  async asyncRemoveItem(id: number) {}
+  async asyncRemoveItem(id: number) {
+    const extendConfig: TypeExtends = this.props.route.extendConfig;
+    const baseApiPath = extendConfig?.baseApiPath;
+    const api = `${baseApiPath}/remove`;
+    let response = await request
+      .post(api, {
+        params: {
+          id: id,
+        },
+      })
+      .catch(() => {
+        return {};
+      });
+    if (response.code === 0) {
+      message.info('删除成功', 1);
+    }
+    // 删除完毕后重新载入数据
+    await this.asyncFetchData();
+  }
 
   componentDidMount() {
     // 初始化数据
@@ -72,7 +90,19 @@ export default class TablePage extends React.Component<any, any> {
                 <Link to={`/component/update/${record.id}`}>修改</Link>
               ) : null}
               <Divider type="vertical" />
-              <Link to={`/delete/${record.id}`}>删除</Link>
+              <Button
+                type="link"
+                onClick={() => {
+                  Modal.confirm({
+                    content: `确认删除记录${record.id}?`,
+                    onOk: () => {
+                      this.asyncRemoveItem(record.id);
+                    },
+                  });
+                }}
+              >
+                删除
+              </Button>
             </span>
           </div>
         );
