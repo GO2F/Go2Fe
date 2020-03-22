@@ -4,6 +4,8 @@
 export default {
   // 支持值为 Object 和 Array
   'GET /api/component/list': {
+    code: 0,
+    msg: 'success',
     data: [
       {
         id: 1,
@@ -23,10 +25,31 @@ export default {
     ],
   },
   'GET /api/component/get': {
+    code: 0,
+    msg: 'success',
     data: {
       id: 1,
       display_name: 'antd',
       package_name: '@antd',
     },
+  },
+  'POST /api/component/create': {
+    code: 0,
+    msg: 'success',
+    data: {
+      id: 1,
+      display_name: 'antd',
+      package_name: '@antd',
+    },
+  },
+  'POST /api/component/update': {
+    code: 0,
+    msg: 'success',
+    data: {},
+  },
+  'POST /api/component/remove': {
+    code: 0,
+    msg: 'success',
+    data: {},
   },
 };
