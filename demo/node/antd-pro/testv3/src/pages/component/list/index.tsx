@@ -21,8 +21,7 @@ export default class TablePage extends React.Component<any, any> {
     let response = await request.get(api).catch(() => {
       return {};
     });
-    console.log('response =>', response);
-    let itemList = response.data || [];
+    let itemList = response?.data || [];
     this.setState({
       itemList: itemList,
     });
