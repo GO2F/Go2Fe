@@ -1,20 +1,30 @@
-# Go2Fe CH
+# 开发说明
 
-Go2Fe 一个使用 Go 写入接口时，快速生成对应界面的脚手架。在大部分开发工作中，后端工程师在开发技术类需求时，往往由于没有前端资源的匹配变得寸步难行。Go2Fe 就是为了解决此问题而诞生的。
+调试命令
 
-Go2Fe 后端语言使用 Go，对应的开发框架使用截至目前使用相对广泛的 Gin。所生成的前端代码是基于 React 的 antd 生成的 code，Gin 和 React 除了易于维护之外，还有很好用户使用基础。
+1.  启动调试
 
-# Go2Fe EN
+在当前目录下执行`fresh`, 会启动对当前目录 go 代码的自动监控, 变动后会自动重新编译
 
-Go2fe is a scaffold that can quickly generate corresponding interface when using Go make interface. In most of the development work, when the back-end engineers develop the technical requirements, they are often unable to move because there is no front-end resource matching. Go2fe was born to solve this problem.
+执行`./.tmp/app-go2fe`, 即可执行最新编译后的结果
 
-Go2fe backend language uses Go, and the corresponding development framework uses Gin, which is relatively widely used up to now. The generated front-end code is the code generated based on react's antd. In addition to being easy to maintain, Gin and react have a good user base.
+# go2fe 使用指南
 
+1.  安装项目`go get github.com/GO2F/Go2Fe`
+2.  在 main.go 文件中引入`go2fe`包, 在`gin.Run`之前, 添加`go2fe.Config()`方法(方便注册所有接口)
+    1.  在每个接口文件里, 通过`go2fe.RegistModel`注册数据模型, 或通过`DataModel`统一注册数据模型
+    2.  添加`client`目录, 作为`go2fe`生成的前端代码所在地
+    3.  添加`***`代码, 配置`static`为静态资源目录, 添加基础路由代码`***`, 默认返回其下的`index.html`作为入口文件
+3.  执行`go run main.go go2fe:generate`, 生成前端代码
+    1.  在 config 方法中, 监控命令行参数, 当发现命令行参数中包含`go2fe:generate`时, 启动页面创建流程
+    2.  首先初始化项目文件夹, 在项目中创建`client`, `static`两个目录
+    3.  然后生成 json 配置, 输出到`client/go2fe.json`目录中
+    4.  然后切换到`client`目录, 下载`go2fe`的 npm 包, 执行 install
+    5.  根据`go2fe.json`配置, 填充代码模板, 生成前端代码
+    6.  执行`npm run build`, 构建前端项目, 将构建结果输出到`static`目录中
+    7.  执行完毕
+4.  运行程序
 
+# todo
 
-# myapp
-Go生成的前端项目所存放的位置
-# src
-Go的工作目录
-# doc
-文档目录
+- [ ] 提供 crud 的接口返回格式规范
