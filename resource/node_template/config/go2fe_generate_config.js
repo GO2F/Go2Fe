@@ -1,7 +1,7 @@
-const TestConfig = [
+export default [
   {
     "version": 0.1,
-    "name":"123123",
+    "name":"demo-project",
     "data_model": {
       "key_list": [
         {
@@ -56,5 +56,3 @@ const TestConfig = [
     "base_api_path": "/api/component"
   }
 ]
-
-export default TestConfig

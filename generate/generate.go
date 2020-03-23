@@ -1,6 +1,7 @@
 package generate
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	config "go2fe/register"
@@ -8,9 +9,16 @@ import (
 
 	// 通过反射拿到数据模型结构
 	"reflect"
+
+	"go/build"
+	"os"
+	"os/exec"
 )
 
 const version = 0.1
+
+// 发布后的包名
+const packageName = "github.com/go2fe"
 
 // type TypeParseResult struct {
 // 	Project     string          `json:"project"`
@@ -97,5 +105,75 @@ func GetJSONConfig() (jsonConfigListJSONStr string) {
 // WriteConfig 写入配置
 func WriteConfig() {
 	configStr := GetJSONConfig()
-	ioutil.WriteFile("config.json", []byte(configStr), 0777)
+	currentPath := getCurrentPath()
+	targetPathURI := currentPath + "/client/src/config/go2fe_generate_config.js"
+	ioutil.WriteFile(targetPathURI, []byte("export default  "+configStr), 0777)
+}
+
+func getCurrentPath() string {
+	currentPath, _ := os.Getwd()
+	return currentPath
+}
+
+// resetDir 删除文件夹下所有文件, 并重新创建文件夹
+func resetDir(targetPath string) (isSuccess bool) {
+	if len(targetPath) < 3 {
+		// 路径长度不对
+		return false
+	}
+	os.RemoveAll(targetPath)
+	os.MkdirAll(targetPath, os.ModePerm)
+	return true
+}
+
+// InitClientTemplate 生成移动端代码
+func InitClientTemplate() {
+	currentPath := getCurrentPath()
+	// 创建client文件夹
+	clientPathURI := currentPath + "/client"
+	resetDir(clientPathURI)
+	// 创建static文件夹
+	staticPathURI := currentPath + "/static"
+	resetDir(staticPathURI)
+
+	gopath := os.Getenv("GOPATH")
+	if gopath == "" {
+		gopath = build.Default.GOPATH
+	}
+	// 将resource/node_template下的文件复制到client中
+	selfPath := gopath + "/pkg/mod" + "/" + packageName
+	selfTemplatePath := selfPath + "/resource/node_template"
+	comd := exec.Command("cp", "-r", selfTemplatePath, clientPathURI)
+	// 必须指定工作路径, 否则找不到对应文件
+	stdout := bytes.Buffer{}
+	stderr := bytes.Buffer{}
+	// comd.Dir = nodeRuntimePath
+	comd.Stdout = &stdout
+	comd.Stderr = &stderr
+	// @todo(yaozeyuan) 暂时屏蔽, 方便debug后续代码
+	fmt.Println("command => ", comd.String())
+	fmt.Println("将前端模板释放到client文件夹中")
+	comd.Run()
+	fmt.Println("释放完毕")
+	fmt.Println("Stdout:", string(stdout.Bytes()))
+	fmt.Println("Stderr:", string(stderr.Bytes()))
+	// 进入client目录, 执行npm i
+	fmt.Println("执行npm install")
+	npmComd := exec.Command("npm", "i")
+	npmComd.Dir = clientPathURI
+	npmComd.Run()
+	fmt.Println("npm install执行完毕")
+	return
+}
+
+// StartBuild 执行构建(dev命令使用脚本启动会更好)
+func StartBuild() {
+	currentPath := getCurrentPath()
+	npmComd := exec.Command("npm", "run", "build")
+	clientPathURI := currentPath + "/client"
+	npmComd.Dir = clientPathURI
+	fmt.Println("执行npm run build, 构建前端代码")
+	npmComd.Run()
+	fmt.Println("前端代码构建完毕")
+	return
 }
