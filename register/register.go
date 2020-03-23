@@ -40,7 +40,7 @@ func Register(model DefineModel) {
 	return
 }
 
-// GetModelList 由go2fe使用, 用于获取所有数据模型列表, 生成配置
+// GetModelList 由github.com/GO2F/Go2Fe使用, 用于获取所有数据模型列表, 生成配置
 func GetModelList() []DefineModel {
 	return pageList
 }

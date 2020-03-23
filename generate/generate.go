@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	config "go2fe/register"
 	"io/ioutil"
+
+	config "github.com/GO2F/Go2Fe/register"
 
 	// 通过反射拿到数据模型结构
 	"reflect"
@@ -18,7 +19,7 @@ import (
 const version = 0.1
 
 // 发布后的包名
-const packageName = "github.com/go2fe"
+const packageName = "github.com/GO2F/Go2Fe"
 
 // type TypeParseResult struct {
 // 	Project     string          `json:"project"`

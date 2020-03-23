@@ -1,4 +1,4 @@
-module go2fe
+module github.com/GO2F/Go2Fe
 
 go 1.13
 

@@ -2,8 +2,9 @@ package test
 
 import (
 	"fmt"
-	"go2fe/generate"
-	"go2fe/register"
+
+	"github.com/GO2F/Go2Fe/generate"
+	"github.com/GO2F/Go2Fe/register"
 )
 
 // CompontentModel demo数据模型
