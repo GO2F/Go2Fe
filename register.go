@@ -25,6 +25,8 @@ type ModelDefine struct {
 	// list页中, 根据page定义, 带有增加/删除/修改/详情按钮
 	// list一定为true
 	Page Page
+	// 数据模型对应的中文名
+	Name string
 	// 页面基础地址(前端自动归并, 并补全出list/create/update路径)
 	BasePath string
 	// 接口基础地址

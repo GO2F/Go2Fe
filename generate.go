@@ -27,7 +27,9 @@ const packageName = "github.com/GO2F/Go2Fe"
 
 // 数据模型-key模型
 type dataKeyModel struct {
-	Key          string `json:"key"`
+	Key string `json:"key"`
+	// 字段中文名
+	Title        string `json:"title"`
 	KeyType      string `json:"var_type"`
 	IsShowInList bool   `json:"is_show_in_list"`
 	IsUniqueKey  bool   `json:"is_unique_key"`
@@ -45,6 +47,8 @@ type typeJSONConfig struct {
 	// list页中, 根据page定义, 带有增加/删除/修改/详情按钮
 	// list一定为true
 	Page Page `json:"page_config"`
+	// 数据模型在前端展示的名称
+	Name string `json:"name"`
 	// 页面基础地址(前端自动归并, 并补全出list/create/update路径)
 	BasePath string `json:"base_url_path"`
 	// 接口基础地址
@@ -116,6 +120,7 @@ func GetJSONConfig() (jsonConfigListJSONStr string) {
 		jsonConfig.Version = version
 		jsonConfig.BaseAPIPath = page.BaseAPIPath
 		jsonConfig.BasePath = page.BasePath
+		jsonConfig.Name = page.Name
 		jsonConfig.Page = page.Page
 
 		dataModel := page.DataModel
@@ -138,6 +143,7 @@ func GetJSONConfig() (jsonConfigListJSONStr string) {
 			keyModel.KeyType = keyType
 			_, keyModel.IsUniqueKey = field.Tag.Lookup("unique_key")
 			_, keyModel.IsShowInList = field.Tag.Lookup("show")
+			_, keyModel.Title = field.Tag.Get("title")
 
 			// 将数据结构打到jsonConfig中
 			jsonConfig.DataModel.KeyList = append(jsonConfig.DataModel.KeyList, keyModel)
