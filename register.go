@@ -7,8 +7,8 @@ type Page struct {
 	Detail bool `json:"detail"`
 }
 
-// DefineModel 数据模型定义
-type DefineModel struct {
+// ModelDefine 数据模型定义
+type ModelDefine struct {
 	// 首先定义数据模型
 	// 需要处理的数据模型为
 	// 模型中有字段标记, 可以取得以下信息
@@ -31,16 +31,16 @@ type DefineModel struct {
 	BaseAPIPath string
 }
 
-// PageList 用于存放所有页面记录
-var pageList []DefineModel
+// modelList 用于存放所有数据模型列表
+var modelList []ModelDefine
 
-// Register 由业务方使用, 注册数据模型
-func Register(model DefineModel) {
-	pageList = append(pageList, model)
+// RegModel 由业务方使用, 注册数据模型
+func RegModel(model ModelDefine) {
+	modelList = append(modelList, model)
 	return
 }
 
 // GetModelList 由github.com/GO2F/Go2Fe使用, 用于获取所有数据模型列表, 生成配置
-func GetModelList() []DefineModel {
-	return pageList
+func GetModelList() []ModelDefine {
+	return modelList
 }
