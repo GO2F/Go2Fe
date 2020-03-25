@@ -1,8 +1,10 @@
-package main
+package go2fe
 
-import "github.com/GO2F/Go2Fe/test"
+import (
+	"fmt"
+)
 
 func main() {
-	test.Run()
+	fmt.Println("hello go2fe")
 	return
 }
