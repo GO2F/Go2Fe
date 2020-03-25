@@ -143,7 +143,7 @@ func GetJSONConfig() (jsonConfigListJSONStr string) {
 			keyModel.KeyType = keyType
 			_, keyModel.IsUniqueKey = field.Tag.Lookup("unique_key")
 			_, keyModel.IsShowInList = field.Tag.Lookup("show")
-			_, keyModel.Title = field.Tag.Get("title")
+			keyModel.Title = field.Tag.Get("title")
 
 			// 将数据结构打到jsonConfig中
 			jsonConfig.DataModel.KeyList = append(jsonConfig.DataModel.KeyList, keyModel)
