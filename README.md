@@ -8,6 +8,10 @@
 
 执行`./.tmp/app-go2fe`, 即可执行最新编译后的结果
 
+# 测试项目
+
+执行`go test`, 会自动自行`main_test.go`中以`Test`开头的函数, 可参考[这里](https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter09/09.1.html)
+
 # go2fe 使用指南
 
 1.  安装项目`go get github.com/GO2F/Go2Fe`

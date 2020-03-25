@@ -1,8 +1,6 @@
 package go2fe
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
 	fmt.Println("hello go2fe")
