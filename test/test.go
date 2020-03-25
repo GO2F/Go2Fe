@@ -5,7 +5,7 @@ import (
 
 	// "github.com/GO2F/Go2Fe/generate"
 	// "github.com/GO2F/Go2Fe/register"
-	"../go2fe"
+	"github.com/GO2F/Go2Fe/go2fe"
 )
 
 // CompontentModel demo数据模型
