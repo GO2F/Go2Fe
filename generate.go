@@ -9,9 +9,9 @@ import (
 	// 通过反射拿到数据模型结构
 	"reflect"
 
-	"go/build"
 	"os"
 	"os/exec"
+	"path/filepath"
 )
 
 const version = 0.1
@@ -71,37 +71,43 @@ func resetDir(targetPath string) (isSuccess bool) {
 	return true
 }
 
-// InitClientTemplate 生成移动端代码
+// InitClientTemplate 首次生成移动端代码
 func InitClientTemplate() {
 	currentPath := getCurrentPath()
 	// 创建client文件夹
-	clientPathURI := currentPath + "/client"
+	clientPathURI := filepath.Join(currentPath, "client")
 	resetDir(clientPathURI)
 	// 创建static文件夹
-	staticPathURI := currentPath + "/static"
+	staticPathURI := filepath.Join(currentPath, "static")
 	resetDir(staticPathURI)
 
-	gopath := os.Getenv("GOPATH")
-	if gopath == "" {
-		gopath = build.Default.GOPATH
-	}
-	// 将resource/node_template下的文件复制到client中
-	selfPath := gopath + "/pkg/mod" + "/" + packageName
-	selfTemplatePath := selfPath + "/resource/node_template"
-	comd := exec.Command("cp", "-r", selfTemplatePath, clientPathURI)
-	// 必须指定工作路径, 否则找不到对应文件
+	bootstrapJsURI := filepath.Join(clientPathURI, "bootstrap.js")
+	// 写入bootstrap.js文件
+	ioutil.WriteFile(bootstrapJsURI, []byte("var unpackage=require('go2fe-node-template');\nunpackage.default();"), 0777)
+
+	// 安装包依赖
+	initComd := exec.Command("npm", "i", "-S", "go2fe-node-template")
 	stdout := bytes.Buffer{}
 	stderr := bytes.Buffer{}
-	// comd.Dir = nodeRuntimePath
-	comd.Stdout = &stdout
-	comd.Stderr = &stderr
+	// 必须指定工作路径, 否则找不到对应文件
+	initComd.Dir = clientPathURI
+	initComd.Stdout = &stdout
+	initComd.Stderr = &stderr
 	// @todo(yaozeyuan) 暂时屏蔽, 方便debug后续代码
-	fmt.Println("command => ", comd.String())
-	fmt.Println("将前端模板释放到client文件夹中")
-	comd.Run()
-	fmt.Println("释放完毕")
+	fmt.Println("command => ", initComd.String())
+	fmt.Println("安装模板代码包")
+	initComd.Run()
+	fmt.Println("模板代码包安装完毕")
 	fmt.Println("Stdout:", string(stdout.Bytes()))
 	fmt.Println("Stderr:", string(stderr.Bytes()))
+
+	// 释放前端模板
+	uppackageFeComd := exec.Command("node", "bootstrap.js")
+	uppackageFeComd.Dir = clientPathURI
+	fmt.Println("准备释放前端模板代码")
+	uppackageFeComd.Run()
+	fmt.Println("前端代码释放完毕")
+
 	// 进入client目录, 执行npm i
 	fmt.Println("执行npm install")
 	npmComd := exec.Command("npm", "i")
