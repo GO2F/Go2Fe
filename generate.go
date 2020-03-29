@@ -16,9 +16,6 @@ import (
 
 const version = 0.1
 
-// 发布后的包名
-const packageName = "github.com/GO2F/Go2Fe"
-
 // type TypeParseResult struct {
 // 	Project     string          `json:"project"`
 // 	CountDateAt int             `json:"countDateAt"`
@@ -71,8 +68,10 @@ func resetDir(targetPath string) (isSuccess bool) {
 	return true
 }
 
-// InitClientTemplate 首次生成移动端代码
-func InitClientTemplate() {
+// InitFeTemplate 首次生成前端项目代码
+func InitFeTemplate() {
+	fmt.Println("初始化前端部分代码")
+	fmt.Println("执行时间大约需要10分钟, 请耐心等待")
 	currentPath := getCurrentPath()
 	// 创建client文件夹
 	clientPathURI := filepath.Join(currentPath, "client")
@@ -86,7 +85,7 @@ func InitClientTemplate() {
 	ioutil.WriteFile(bootstrapJsURI, []byte("var unpackage=require('go2fe-node-template');\nunpackage.default();"), 0777)
 
 	// 安装包依赖
-	initComd := exec.Command("npm", "i", "-S", "go2fe-node-template")
+	initComd := exec.Command("npm", "i", "-S", "go2fe-node-template", "--registry=\"http://registry.npmjs.org/\"")
 	stdout := bytes.Buffer{}
 	stderr := bytes.Buffer{}
 	// 必须指定工作路径, 否则找不到对应文件
@@ -98,8 +97,6 @@ func InitClientTemplate() {
 	fmt.Println("安装模板代码包")
 	initComd.Run()
 	fmt.Println("模板代码包安装完毕")
-	fmt.Println("Stdout:", string(stdout.Bytes()))
-	fmt.Println("Stderr:", string(stderr.Bytes()))
 
 	// 释放前端模板
 	uppackageFeComd := exec.Command("node", "bootstrap.js")
@@ -110,7 +107,7 @@ func InitClientTemplate() {
 
 	// 进入client目录, 执行npm i
 	fmt.Println("执行npm install")
-	npmComd := exec.Command("npm", "i")
+	npmComd := exec.Command("npm", "i", "--registry=\"http://registry.npmjs.org/\"")
 	npmComd.Dir = clientPathURI
 	npmComd.Run()
 	fmt.Println("npm install执行完毕")
