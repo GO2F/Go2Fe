@@ -16,8 +16,8 @@ type CompontentModel struct {
 	Remark      string `json:"remark" title:"备注"`
 }
 
-// Run 启动测试
-func Run() {
+// run 启动测试
+func run() {
 	fmt.Println("启动测试")
 	fmt.Println("注册数据模型")
 	model := ModelDefine{
@@ -44,7 +44,7 @@ func TestHello(t *testing.T) {
 	fmt.Println("success!")
 
 	t.Log("start run")
-	Run()
+	run()
 	t.Log("success 2")
 
 }
