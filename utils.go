@@ -18,10 +18,10 @@ func resetDir(targetPath string) (isSuccess bool) {
 	return true
 }
 
-func isPathExist(path:string){
-	_, err := os.Stat(path)
-    if err == nil {
-        return true
+func isPathExist(pathURI string) {
+	_, err := os.Stat(pathURI)
+	if err == nil {
+		return true
 	}
 	return false
 }
