@@ -1,7 +1,6 @@
 package go2fe
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -9,8 +8,6 @@ import (
 	// 通过反射拿到数据模型结构
 	"reflect"
 
-	"os"
-	"os/exec"
 	"path/filepath"
 )
 
@@ -108,7 +105,6 @@ func GetJSONConfig() (jsonConfigListJSONStr string) {
 func WriteConfig() {
 	configStr := GetJSONConfig()
 	currentPath := getCurrentPath()
-	targetPathURI := currentPath + "/client/src/config/go2fe_generate_config.js"
+	targetPathURI := filepath.Join(currentPath, "client", "src", "config", "go2fe_generate_config.js")
 	ioutil.WriteFile(targetPathURI, []byte("export default  "+configStr), 0777)
 }
-

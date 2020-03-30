@@ -17,3 +17,11 @@ func resetDir(targetPath string) (isSuccess bool) {
 	os.MkdirAll(targetPath, os.ModePerm)
 	return true
 }
+
+func isPathExist(path:string){
+	_, err := os.Stat(path)
+    if err == nil {
+        return true
+	}
+	return false
+}

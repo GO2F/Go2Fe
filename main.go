@@ -93,8 +93,13 @@ func InitFeTemplate() {
 // StartBuild 执行构建(dev命令使用脚本启动会更好)
 func StartBuild() {
 	currentPath := getCurrentPath()
+	clientPathURI := filepath(currentPath, "client")
+	if isPathExist(clientPathURI) == false {
+		fmt.Println("未检测到client文件夹,请先执行go run main.go go2fe:init 初始化项目")
+		return
+	}
+
 	npmComd := exec.Command("npm", "run", "build")
-	clientPathURI := currentPath + "/client"
 	npmComd.Dir = clientPathURI
 	fmt.Println("执行npm run build, 构建前端代码")
 	npmComd.Run()
@@ -106,7 +111,11 @@ func StartBuild() {
 func StartDev() {
 	currentPath := getCurrentPath()
 	npmComd := exec.Command("npm", "run", "dev")
-	clientPathURI := currentPath + "/client"
+	clientPathURI := filepath(currentPath, "client")
+	if isPathExist(clientPathURI) == false {
+		fmt.Println("未检测到client文件夹,请先执行go run main.go go2fe:init 初始化项目")
+		return
+	}
 	npmComd.Dir = clientPathURI
 	fmt.Println("执行npm run dev, 启动开发环境")
 	npmComd.Run()
