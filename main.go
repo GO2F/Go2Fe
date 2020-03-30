@@ -16,9 +16,9 @@ const buildFlag = "go2fe:build"
 // Bootstrap 启动项目
 // 根据系统参数不同, 执行不同命令
 func Bootstrap() {
-	fmt.Println("bootstrap")
 	args := strings.Join(os.Args[1:], "")
 	if strings.Contains(args, initFlag) {
+		fmt.Println("go2fe bootstrap...")
 		// 初始化
 		fmt.Println("初始化项目代码")
 		InitFeTemplate()
@@ -26,12 +26,14 @@ func Bootstrap() {
 		return
 	}
 	if strings.Contains(args, devFlag) {
+		fmt.Println("go2fe bootstrap...")
 		// 启动dev环境
 		fmt.Println("进程以命令模式启动")
 		StartDev()
 		return
 	}
 	if strings.Contains(args, buildFlag) {
+		fmt.Println("go2fe bootstrap...")
 		// 构建前端代码
 		fmt.Println("构建前端代码")
 		StartBuild()
