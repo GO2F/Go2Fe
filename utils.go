@@ -18,7 +18,7 @@ func resetDir(targetPath string) (isSuccess bool) {
 	return true
 }
 
-func isPathExist(pathURI string) {
+func isPathExist(pathURI string) (isExist bool) {
 	_, err := os.Stat(pathURI)
 	if err == nil {
 		return true
