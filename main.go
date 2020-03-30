@@ -88,6 +88,11 @@ func startCommand(env string) {
 		fmt.Println("执行npm run dev, 启动开发环境")
 		runCommand([]string{"npm", "run", "dev"}, clientPathURI)
 	} else {
+		fmt.Println("重置static文件夹")
+		// 创建static文件夹
+		staticPathURI := filepath.Join(currentPath, "static")
+		resetDir(staticPathURI)
+		fmt.Println("static文件夹重置完毕")
 		fmt.Println("执行npm run build, 构建前端代码")
 		runCommand([]string{"npm", "run", "build"}, clientPathURI)
 		fmt.Println("前端代码构建完毕")
