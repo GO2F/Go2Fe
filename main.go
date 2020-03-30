@@ -29,14 +29,12 @@ func Bootstrap() {
 		// 启动dev环境
 		fmt.Println("进程以命令模式启动")
 		StartDev()
-		fmt.Println("前端进程已启动")
 		return
 	}
 	if strings.Contains(args, buildFlag) {
 		// 构建前端代码
 		fmt.Println("构建前端代码")
 		StartBuild()
-		fmt.Println("前端代码构建完毕")
 		return
 	}
 	return
@@ -83,6 +81,19 @@ func startCommand(env string) {
 		fmt.Println("未检测到client文件夹,请先执行go run main.go go2fe:init 初始化项目")
 		return
 	}
+
+	// 检查页面配置
+	fmt.Println("检查页面配置")
+	modelList := GetModelList()
+	fmt.Println("当前共配置页面", len(modelList), "个")
+	if len(modelList) == 0 {
+		fmt.Println("当前没有可用页面配置, 请先注册页面后再用")
+		return
+	}
+	// 输出页面配置列表
+	fmt.Println("更新页面配置")
+	WriteConfig()
+	fmt.Println("页面配置更新完毕")
 
 	if env == "npm-run-dev" {
 		fmt.Println("执行npm run dev, 启动开发环境")
