@@ -1,8 +1,12 @@
 package go2fe
 
-import "os"
-import "bufio"
-import "os/exec"
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"os"
+	"os/exec"
+)
 
 func getCurrentPath() string {
 	currentPath, _ := os.Getwd()
@@ -28,8 +32,8 @@ func isPathExist(pathURI string) (isExist bool) {
 	return false
 }
 
-func runCommand(argv []string, dir string)(bool){
-	cmd := exec.Command(...argv)
+func runCommand(argv []string, dir string) bool {
+	cmd := exec.Command(argv[0], argv[1:]...)
 	cmd.Dir = dir
 	fmt.Println("执行命令:", cmd.Args)
 	stdout, err := cmd.StdoutPipe()
