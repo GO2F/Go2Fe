@@ -14,20 +14,89 @@
 
 # go2fe 使用指南
 
-1.  安装项目`go get github.com/GO2F/Go2Fe`
-2.  在 main.go 文件中引入`github.com/GO2F/Go2Fe`包, 在`gin.Run`之前, 添加`github.com/GO2F/Go2Fe.Config()`方法(方便注册所有接口)
-    1.  在每个接口文件里, 通过`github.com/GO2F/Go2Fe.RegistModel`注册数据模型, 或通过`DataModel`统一注册数据模型
-    2.  添加`client`目录, 作为`github.com/GO2F/Go2Fe`生成的前端代码所在地
-    3.  添加`***`代码, 配置`static`为静态资源目录, 添加基础路由代码`***`, 默认返回其下的`index.html`作为入口文件
-3.  执行`go run main.go github.com/GO2F/Go2Fe:generate`, 生成前端代码
-    1.  在 config 方法中, 监控命令行参数, 当发现命令行参数中包含`github.com/GO2F/Go2Fe:generate`时, 启动页面创建流程
-    2.  首先初始化项目文件夹, 在项目中创建`client`, `static`两个目录
-    3.  然后生成 json 配置, 输出到`client/github.com/GO2F/Go2Fe.json`目录中
-    4.  然后切换到`client`目录, 下载`github.com/GO2F/Go2Fe`的 npm 包, 执行 install
-    5.  根据`github.com/GO2F/Go2Fe.json`配置, 填充代码模板, 生成前端代码
-    6.  执行`npm run build`, 构建前端项目, 将构建结果输出到`static`目录中
-    7.  执行完毕
-4.  运行程序
+1.  安装依赖包`go get github.com/GO2F/Go2Fe`
+2.  初始化项目
+
+    1.  在 main.go 中引入
+
+        1.  `go2fe "github.com/GO2F/Go2Fe"`
+        2.  注册数据模型
+
+            1.  通过`go2fe.RegModel()`注册数据模型
+            2.  示例
+
+                ```go
+                // ComponentModel demo数据模型
+                type ComponentModel struct {
+                    ID          string `json:"ID" unique_key:"" show:"" title:"id"`
+                    DisplayName string `json:"DisplayName" show:"" title:"组件名"`
+                    PackageName string `json:"PackageName" show:"" title:"包名"`
+                    DevListJSON string `json:"DevListJSON" show:"" title:"开发者"`
+                    Description string `json:"Description" show:"" title:"描述"`
+                    SiteURL     string `json:"SiteURL" show:"" title:"网站主页"`
+                    Remark      string `json:"Remark" title:"备注"`
+                }
+
+                func main() {
+                    customerModel := go2fe.ModelDefine{
+                        DataModel: ComponentModel{},
+                        Page: go2fe.Page{
+                            Create: true,
+                            Update: true,
+                            Detail: true,
+                        },
+                        Name:        "测试模型",
+                        BasePath:    "/component",
+                        BaseAPIPath: "/api/component",
+                    }
+                    go2fe.RegModel(customerModel)
+
+                    if go2fe.Bootstrap() {
+                        return
+                    }
+                    dbErr := model.InitDb()
+                    log.Init(config.App.LogPathURI)
+                    // log.Info("进程以server模式启动")
+                    if dbErr != nil {
+                        // log.Error("数据库初始化失败,程序退出")
+                        return
+                    }
+                    r := router.InitRouter()
+
+                    // 程序结束前关闭数据库链接
+                    defer model.DB.Close()
+                    r.Run(":" + config.App.Port)
+                }
+                ```
+
+            3.  数据模型字段说明
+                1.  test
+
+        3.  添加接口代码
+            1.  每类数据模型需要实现以下五个接口, 参数定义见[这里](Swagger-openAPI描述)
+                1.  get
+                2.  list
+                3.  create
+                4.  update
+                5.  remove
+        4.  在 main 方法中添加
+            1.  go2fe.Bootstrap()
+        5.  执行 `go run main.go go2fe:init`, 初始化文件夹
+            1.  或者直接使用内置函数启动`go2fe.InitFeTemplate()`
+        6.  执行 `go run main.go go2fe:start`, 启动前端测试环境, 生成的前端代码位于`client`文件夹中
+            1.  通过异步函数启动 dev 代码
+            2.  或者直接使用内置函数启动`go2fe.StartDev()`
+        7.  执行 `go run main.go go2fe:build`, 构建前端代码, 生成的静态资源位于`static`文件夹中
+            1.  或者直接使用内置函数启动`go2fe.StartBuild()`
+
+# 项目文件夹目录
+
+- client
+  - 前端代码目录
+  - 需要添加到 .gitignore 中
+- static
+  - 静态资源目录
+  - 需要添加到 .gitignore 中
 
 # todo
 

@@ -11,11 +11,14 @@ import (
 // 命令行flag列表
 const initFlag = "go2fe:init"
 const devFlag = "go2fe:dev"
+const startFlag = "go2fe:start"
 const buildFlag = "go2fe:build"
 
 // Bootstrap 启动项目
 // 根据系统参数不同, 执行不同命令
-func Bootstrap() {
+// 匹配到命令时, 返回true, 否则返回false.
+// 返回true时, 应终止后续代码运行
+func Bootstrap() bool {
 	args := strings.Join(os.Args[1:], "")
 	if strings.Contains(args, initFlag) {
 		fmt.Println("go2fe bootstrap...")
@@ -23,23 +26,23 @@ func Bootstrap() {
 		fmt.Println("初始化项目代码")
 		InitFeTemplate()
 		fmt.Println("项目代码初始化完毕")
-		return
+		return true
 	}
-	if strings.Contains(args, devFlag) {
+	if strings.Contains(args, devFlag) || strings.Contains(args, startFlag) {
 		fmt.Println("go2fe bootstrap...")
 		// 启动dev环境
 		fmt.Println("进程以命令模式启动")
 		StartDev()
-		return
+		return true
 	}
 	if strings.Contains(args, buildFlag) {
 		fmt.Println("go2fe bootstrap...")
 		// 构建前端代码
 		fmt.Println("构建前端代码")
 		StartBuild()
-		return
+		return true
 	}
-	return
+	return false
 }
 
 // InitFeTemplate 首次生成前端项目代码
