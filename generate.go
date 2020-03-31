@@ -105,6 +105,7 @@ func GetJSONConfig() (jsonConfigListJSONStr string) {
 func WriteConfig() {
 	configStr := GetJSONConfig()
 	currentPath := getCurrentPath()
-	targetPathURI := filepath.Join(currentPath, "client", "src", "config", "go2fe_generate_config.js")
+	targetPathURI := filepath.Join(currentPath, "client", "config", "go2fe_generate_config.js")
+	fmt.Println("配置文件输出到=>", targetPathURI)
 	ioutil.WriteFile(targetPathURI, []byte("export default  "+configStr), 0777)
 }
