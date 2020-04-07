@@ -10,6 +10,8 @@
 
 # go2fe 使用指南
 
+> 模板示例项目: [demo-project](https://github.com/GO2F/demo-project)
+
 1.  安装依赖包`go get github.com/GO2F/Go2Fe`
 2.  初始化项目
 
