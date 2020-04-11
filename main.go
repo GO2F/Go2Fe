@@ -63,18 +63,18 @@ func InitFeTemplate() {
 
 	// 安装包依赖
 	fmt.Println("安装模板代码包")
-	runCommand([]string{"npm", "i", "-S", "go2fe-node-template", "--registry=\"http://registry.npmjs.org/\""}, clientPathURI)
+	runCommand([]string{"npm", "i", "-S", "go2fe-node-template", "--registry=\"https://registry.npm.taobao.org\""}, clientPathURI)
 	fmt.Println("模板代码包安装完毕")
 
 	// 释放前端模板
 	fmt.Println("准备释放前端模板代码")
 	runCommand([]string{"node", "bootstrap.js"}, clientPathURI)
-	fmt.Println("前端代码释放完毕")
+	fmt.Println("前端代码释放完毕, 准备安装前端依赖")
 
 	// 进入client目录, 执行npm i
-	fmt.Println("执行npm install")
-	runCommand([]string{"npm", "i", "--registry=\"http://registry.npmjs.org/\""}, clientPathURI)
-	fmt.Println("npm install执行完毕")
+	fmt.Println("开始安装前端依赖, 执行npm install")
+	runCommand([]string{"npm", "i", "--registry=\"https://registry.npm.taobao.org\""}, clientPathURI)
+	fmt.Println("npm install执行完毕, 前端依赖安装完毕")
 	return
 }
 
